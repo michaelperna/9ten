@@ -66,6 +66,7 @@ export class NewCommentForVideoOwner extends AbstractNotification <MCommentOwner
         commentHtml,
         video,
         videoUrl,
+        requiresApproval: this.payload.heldForReview,
         action: {
           text: 'View comment',
           url: commentUrl
