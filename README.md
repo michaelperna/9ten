@@ -1,202 +1,152 @@
-<h1 align="center">
-  <a href="https://joinpeertube.org">
-    <img src="https://joinpeertube.org/img/brand.png" alt="PeerTube">
-  </a>
-</h1>
+# 9ten - A Decentralized Music Streaming Platform
 
-<p align=center>
-  <strong><a href="https://joinpeertube.org">Website</a></strong>
-  | <strong><a href="https://joinpeertube.org/instances">Join an instance</a></strong>
-  | <strong><a href="https://github.com/Chocobozzz/PeerTube/blob/develop/README.md#package-create-your-own-instance">Create an instance</a></strong>
-  | <strong><a href="https://github.com/Chocobozzz/PeerTube/blob/develop/README.md#contact">Chat with us</a></strong>
-  | <strong><a href="https://framasoft.org/en/#soutenir">Donate</a></strong>
-</p>
+## Introduction and Vision
 
-<p align="center">
-Be part of a network of multiple small federated, interoperable video hosting providers. Follow video creators and create videos. No vendor lock-in. All on a platform that is community-owned and ad-free.
-</p>
+**Purpose**
+9ten is a decentralized music streaming platform leveraging peer-to-peer data sharing technologies and the W3C ActivityPub protocol to create a social network for artists and fans. The platform enables listeners to pay an optional monthly subscription fee, fairly distributed to their top 9 most-listened-to artists each month.
 
-<p align="center">
-  <strong>Developed with &#10084; by <a href="https://framasoft.org">Framasoft</a></strong>
-</p>
+**Vision Statement**
+To revolutionize the music streaming industry by fostering a fair, transparent, and decentralized ecosystem that empowers artists and engages listeners. Our goal is to create a platform where the needs and rights of artists and listeners take precedence over large conglomerates.
 
-<p align="center">
-  <a href="https://framasoft.org">
-    <img width="150px" src="https://lutim.cpy.re/FeRgHH8r.png" alt="Framasoft logo"/>
-  </a>
-</p>
+## Core Principles
 
-<p align="center">
-  <strong>Client</strong>
+1. **Fair Compensation**
+2. **Decentralization of Power**
+3. **Transparency in Operations**
+4. **Artist Empowerment**
+5. **Listener Engagement**
+6. **Responsive to Community Needs**
 
-  <br />
+## Stakeholder Overview
 
-  <a href="https://automate.browserstack.com/public-build/ZEZqamJQUXFQd1l3cFp3QmxLSVVwdjBGZjNGc3J2M09INFpka296em9VYz0tLUowWVdoemxkY1hBOU9aZzNlY1htZ3c9PQ==--68e0184ce76481d36559d681d9cddc68235ff536">
-    <img src="https://automate.browserstack.com/badge.svg?badge_key=ZEZqamJQUXFQd1l3cFp3QmxLSVVwdjBGZjNGc3J2M09INFpka296em9VYz0tLUowWVdoemxkY1hBOU9aZzNlY1htZ3c9PQ==--68e0184ce76481d36559d681d9cddc68235ff536"/>
-  </a>
+### Roles and Responsibilities
+- **Developers**: Implement and maintain the technical aspects of the platform, including ActivityPub integration and Hyperledger Fabric setup.
+- **Artists**: Upload music, engage with fans, and manage earnings.
+- **Server Admins**: Set up and manage 9ten server instances, ensuring data integrity and reporting.
+- **Listeners**: Use the platform to stream music, support artists, and interact with content.
 
-  <a href="https://weblate.framasoft.org/projects/peertube/angular/">
-    <img src="https://weblate.framasoft.org/widgets/peertube/-/angular/svg-badge.svg"/>
-  </a>
-</p>
+### Stakeholder Benefits
+- **Developers**: Opportunity to work on cutting-edge technologies and contribute to an innovative project.
+- **Artists**: Fair compensation, direct engagement with fans, and control over their content.
+- **Server Admins**: Regular revenue from listener subscriptions and control over their instances.
+- **Listeners**: Directly support favorite artists and enjoy high-quality, decentralized streaming.
 
-<p align="center">
-  <strong>Server</strong>
+## Technical Overview
 
-  <br />
+### Architecture Diagram
+Provide a high-level architecture diagram showing the interaction between various components (ActivityPub servers, Hyperledger Fabric nodes, client applications, etc.).
 
-  <a href="https://github.com/Chocobozzz/PeerTube/actions?query=workflow%3A%22Test+Suite%22+branch%3Adevelop">
-    <img alt="test suite status" src="https://github.com/Chocobozzz/PeerTube/workflows/Test%20Suite/badge.svg" />
-  </a>
+### Data Flow Diagram
+Illustrate the data flow from the point a user listens to a track, to how data is logged, verified, and payments are distributed.
 
-  <a href="https://standardjs.com/">
-    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="JavaScript Style Guide" />
-  </a>
-</p>
+## Detailed Technical Implementation
 
-<br />
+### Extending ActivityPub for Streaming
+#### Forking PeerTube
+1. **Adapt for Audio**: Modify the codebase to support audio streaming, ensuring efficient handling of audio files.
+2. **Custom Activities**: Define new ActivityPub activities for music-specific interactions:
+   - `ListenActivity`: Represents a user listening to a track.
+   - `StreamActivity`: Represents live streaming events.
+   - `SubscriptionActivity`: Represents subscribing to an artist or node.
+3. **Custom Objects**: Create new objects to represent musical content:
+   - `AudioTrack`: Includes metadata like artist, album, duration, etc.
+   - `Playlist`: User-curated lists of audio tracks.
 
-<p align="center">
-  <a href="https://framatube.org/videos/watch/217eefeb-883d-45be-b7fc-a788ad8507d3">
-    <img src="https://lutim.cpy.re/9CLXh0Ys.png" alt="screenshot" />
-  </a>
-</p>
+#### ActivityPub API Extensions
+Extend the API endpoints to handle new activities and objects, ensuring compliance with the protocol.
 
-Introduction
-----------------------------------------------------------------
+### Integrating Hyperledger for Transactions
+#### Hyperledger Fabric Setup
+1. **Deploy Hyperledger Nodes**: Each ActivityPub server also runs a Hyperledger Fabric node.
+2. **Chaincode Development**:
+   - **Subscription Payments**: Logic for subscription payments, ensuring $1 goes to node operators and $9 is pooled for artists.
+   - **Streaming Rewards**: Distribute funds to artists based on verified streaming data.
+   - **Transaction Verification**: Ensure all transactions are verified and recorded on the ledger.
 
-PeerTube is a free, decentralized and federated video platform developed as an alternative to other platforms that centralize our data and attention, such as YouTube, Dailymotion or Vimeo. :clapper:
+#### Data Flow
+- **Payment Handling**: Payments are processed through listeners' digital wallets, interfaced with Hyperledger Fabric.
+- **Streaming Data**: Nodes collect streaming data and report it to the ledger for data integrity and transparency.
 
-To learn more:
-* This [two-minute video](https://framatube.org/videos/watch/217eefeb-883d-45be-b7fc-a788ad8507d3) (hosted on PeerTube) explaining what PeerTube is and how it works
-* PeerTube's project homepage, [joinpeertube.org](https://joinpeertube.org)
-* Demonstration instances:
-  * [peertube.cpy.re](https://peertube.cpy.re) (stable)
-  * [peertube2.cpy.re](https://peertube2.cpy.re) (Nightly)
-  * [peertube3.cpy.re](https://peertube3.cpy.re) (RC)
-* This [video](https://peertube.cpy.re/videos/watch/da2b08d4-a242-4170-b32a-4ec8cbdca701) demonstrating the communication between PeerTube and [Mastodon](https://github.com/tootsuite/mastodon) (a decentralized Twitter alternative)
+## Effective Dispute Resolution Mechanism
 
-:sparkles: Features
-----------------------------------------------------------------
+### Dispute Detection
+Implement automated systems to detect anomalies in streaming data.
 
-<p align=center>
-  <strong><a href="https://joinpeertube.org/faq#what-are-the-peertube-features-for-viewers">All features for viewers</a></strong>
-  | <strong><a href="https://joinpeertube.org/faq#what-are-the-peertube-features-for-content-creators">All features for content creators</a></strong>
-  | <strong><a href="https://joinpeertube.org/faq#what-are-the-peertube-features-for-administrators">All features for administrators</a></strong>
-</p>
+### Three Eyes Policy
+1. **Verification Process**: Disputes are reviewed by the local node, a peer within the cluster, and an external node.
+2. **Resolution Workflow**:
+   - **Flagging Discrepancies**: Automatically flag potential disputes.
+   - **Manual Review**: Nodes perform manual reviews, consulting with other nodes as needed.
+   - **Third-Party Arbitration**: A node from another cluster can arbitrate using detailed logs and data.
 
-<img src="https://lutim.cpy.re/AHbctLjn.png" align="left" height="300px"/>
-<h3 align="left">Video streaming, even in live!</h3>
-<p align="left">
-Just upload your videos, and be sure they will stream anywhere. Add a description, some tags and your video will be discoverable by the entire video fediverse, not just your instance. You can even embed a player on your favorite website!
-</p>
-<p align="left">
-You are used to hosting live events? We got you covered too! Start livestreaming from your favorite client, and even host permanent streams!
-</p>
+### Consensus and Documentation
+1. **Achieve Consensus**: Ensure all parties agree on the resolution.
+2. **Record Keeping**: Document all disputes, resolutions, and arbitration outcomes for transparency and audits.
 
----
+## Payment Handling and Subscription Management
 
-<img src="https://lutim.cpy.re/cxWccUK7.png" align="right" height="200px"/>
+### Listener Subscription Payments
+Listeners pay $10 USD equivalent in USDP to their local node’s wallet. Payments handled externally through cryptocurrency wallets or payment gateways.
 
-<h3 align="right">Keep in touch with video creators</h3>
-<p align="right">
-Follow your favorite channels from PeerTube or really any other place. No need to have an account on the instance you watched a video to follow its author, you can do all of that from the Fediverse (Mastodon, Pleroma, and plenty others), or just with good ol' RSS.
-</p>
+### Initial Distribution of Funds
+$1 to node operators on the 1st of each month for operational costs. $9 pooled for artist payouts, distributed by the 25th based on verified streaming data.
 
----
+### Subscription Management
+1. **Managed through secure payment gateways.**
+2. **Smart contracts record subscription details, ensuring continuous service.**
+3. **Multi-node verification ensures transaction validity and updates the ledger.**
+4. **Automated renewals and expirations handled through the system.**
 
-<img src="https://lutim.cpy.re/K07EhFbt.png" align="left" height="200px"/>
+## Reporting
 
-<h3 align="left">An interface to call home</h3>
-<p align="left">
-Be it as a user or an instance administrator, you can decide what your experience will be like. Don't like the colors? They are easy to change. Don't want to list videos of an instance but let your users subscribe to them? Don't like the regular web client? All of that can be changed, and much more. No UX dark pattern, no mining your data, no video recommendation bullshit™.
-</p>
+### Daily Listening Reports
+1. **Capture detailed streaming data, aggregated daily at node level.**
+2. **Automated anomaly detection for potential data issues.**
+3. **Data anonymized and encrypted for privacy and security.**
 
----
+### Monthly Listening Report Reconciliation
+1. **Compile daily reports into a comprehensive monthly report.**
+2. **Internal and peer reviews ensure data accuracy.**
+3. **Automated dispute resolution protocol for discrepancies.**
+4. **Verified data used for calculating artist payouts through smart contracts.**
+5. **Maintain comprehensive records for audits and regulatory compliance.**
 
-<h3 align="right">Communities that help each other</h3>
-<p align="right">
-In addition to visitors using P2P with WebRTC to share the load among them, instances can help each other by caching one another's videos. This way even small instances have a way to show content to a wider audience, as they will be shouldered by friend instances (more about that in our <a href="https://docs.joinpeertube.org/contribute/architecture#redundancy-between-instances">redundancy guide</a>).
-</p>
-<p align="right">
-Content creators can get help from their viewers in the simplest way possible: a support button showing a message linking to their donation accounts or really anything else. No more pay-per-view and advertisements that hurt visitors and alter creativity (more about that in our <a href="https://github.com/Chocobozzz/PeerTube/blob/develop/FAQ.md">FAQ</a>).
-</p>
+## Non-Technical Aspects
 
+### Community and Governance
+1. **Community Guidelines**: Establish guidelines for community interaction and contribution.
+2. **Governance Model**: Define how decisions are made, who has voting rights, and how conflicts are resolved.
 
+### Marketing and Outreach
+1. **Strategy**: Outline strategies to attract early artists and listeners.
+2. **Partnerships**: Potential partnerships with music schools, indie artist collectives, and other music industry entities.
 
-:raised_hands: Contributing
-----------------------------------------------------------------
+## Security and Privacy
 
-You don't need to be a programmer to help!
+### Data Privacy
+Describe how user data is protected and anonymized.
 
-You can give us your feedback, report bugs, help us translate PeerTube, write documentation, and more. Check out the [contributing
-guide](https://github.com/Chocobozzz/PeerTube/blob/develop/.github/CONTRIBUTING.md) to know how, it takes less than 2 minutes to get started. :wink:
+### Security Measures
+Outline the security protocols for transaction handling, data storage, and communication.
 
-You can also join the cheerful bunch that makes our community:
+## Roadmap and Milestones
 
-* Chat<a name="contact"></a>:
-  * Matrix (bridged on IRC and [Discord](https://discord.gg/wj8DDUT)) : **[#peertube:matrix.org](https://matrix.to/#/#peertube:matrix.org)**
-  * IRC : **[#peertube on irc.libera.chat:6697](https://web.libera.chat/#peertube)**
-* Forum:
-  * Framacolibri: [https://framacolibri.org/c/peertube](https://framacolibri.org/c/peertube)
+### Development Roadmap
+Provide a timeline for development phases, including major milestones.
 
-Feel free to reach out if you have any questions or ideas! :speech_balloon:
+### Release Plan
+Plan for alpha, beta, and public release, including testing and feedback loops.
 
-:package: Create your own instance
-----------------------------------------------------------------
+### Metrics for Success
+Define key performance indicators (KPIs) to measure progress.
 
-See the [production guide](https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md), which is the recommended way to install or upgrade PeerTube. For hardware requirements, see [Should I have a big server to run PeerTube?](https://joinpeertube.org/faq#should-i-have-a-big-server-to-run-peertube) in the FAQ.
+## Appendices
 
-See the [community packages](https://docs.joinpeertube.org/install/unofficial), which cover various platforms (including [YunoHost](https://install-app.yunohost.org/?app=peertube) and [Docker](https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/docker.md)).
+### Glossary
+Define key terms and acronyms used in the document.
 
-:book: Documentation
-----------------------------------------------------------------
+### References
+Include references to technical resources, standards, and external documentation.
 
-If you have a question, please try to find the answer in the [FAQ](https://joinpeertube.org/faq) first.
-
-### User documentation
-
-See the [user documentation](https://docs.joinpeertube.org/use/setup-account).
-
-### Admin documentation
-
-See [how to create your own instance](https://github.com/Chocobozzz/PeerTube/blob/develop/README.md#package-create-your-own-instance).
-
-See the more general [admin documentation](https://docs.joinpeertube.org/admin/following-instances).
-
-### Tools documentation
-
-Learn how to import/upload videos from CLI or admin your PeerTube instance with the [tools documentation](https://docs.joinpeertube.org/maintain/tools).
-
-### Technical documentation
-
-See the [architecture blueprint](https://docs.joinpeertube.org/contribute/architecture) for a more detailed explanation of the architectural choices.
-
-See our REST API documentation:
-  * OpenAPI 3.0.0 schema: [/support/doc/api/openapi.yaml](https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/api/openapi.yaml)
-  * Spec explorer: [docs.joinpeertube.org/api-rest-reference.html](https://docs.joinpeertube.org/api-rest-reference.html)
-
-See our [ActivityPub documentation](https://docs.joinpeertube.org/api/activitypub).
-
-## License
-
-### Logo
-
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), by [Framasoft](https://framasoft.org)
-
-### Code
-
-Copyright (C) 2015-2024 PeerTube Contributors (see [CREDITS.md](/CREDITS.md))
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+### Frequently Asked Questions (FAQ)
+Address common questions that stakeholders might have.
