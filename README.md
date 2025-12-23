@@ -33,40 +33,12 @@ To revolutionize the music streaming industry by fostering a fair, transparent, 
 
 ## Technical Overview
 
+### Data Flow & Financial Architecture
 ### Architecture Diagram
 Provide a high-level architecture diagram showing the interaction between various components (ActivityPub servers, Hyperledger Fabric nodes, client applications, etc.).
 
 ### Data Flow Diagram
-Illustrate the data flow from the point a user listens to a track, to how data is logged, verified, and payments are distributed.
-
-## Detailed Technical Implementation
-
-### Extending ActivityPub for Streaming
-#### Forking PeerTube
-1. **Adapt for Audio**: Modify the codebase to support audio streaming, ensuring efficient handling of audio files.
-2. **Custom Activities**: Define new ActivityPub activities for music-specific interactions:
-   - `ListenActivity`: Represents a user listening to a track.
-   - `StreamActivity`: Represents live streaming events.
-   - `SubscriptionActivity`: Represents subscribing to an artist or node.
-3. **Custom Objects**: Create new objects to represent musical content:
-   - `AudioTrack`: Includes metadata like artist, album, duration, etc.
-   - `Playlist`: User-curated lists of audio tracks.
-
-#### ActivityPub API Extensions
-Extend the API endpoints to handle new activities and objects, ensuring compliance with the protocol.
-
-### Integrating Hyperledger for Transactions
-#### Hyperledger Fabric Setup
-1. **Deploy Hyperledger Nodes**: Each ActivityPub server also runs a Hyperledger Fabric node.
-2. **Chaincode Development**:
-   - **Subscription Payments**: Logic for subscription payments, ensuring $1 goes to node operators and $9 is pooled for artists.
-   - **Streaming Rewards**: Distribute funds to artists based on verified streaming data.
-   - **Transaction Verification**: Ensure all transactions are verified and recorded on the ledger.
-
-#### Data Flow
-- **Payment Handling**: Payments are processed through listeners' digital wallets, interfaced with Hyperledger Fabric.
-- **Streaming Data**: Nodes collect streaming data and report it to the ledger for data integrity and transparency.
-
+```mermaid
 flowchart TD
     %% Define Styles
     classDef blockchain fill:#f9f,stroke:#333,stroke-width:2px;
@@ -117,6 +89,65 @@ flowchart TD
     Node -->|14. Submit PayoutManifest| SC
     SC -->|15. Unlock Funds| Vault
     Vault -->|16. Direct Transfer| Artist
+```
+
+## Detailed Technical Implementation
+
+### Extending ActivityPub for Streaming
+#### Forking PeerTube
+1. **Adapt for Audio**: Modify the codebase to support audio streaming, ensuring efficient handling of audio files.
+2. **Custom Activities**: Define new ActivityPub activities for music-specific interactions:
+   - `ListenActivity`: Represents a user listening to a track.
+   - `StreamActivity`: Represents live streaming events.
+   - `SubscriptionActivity`: Represents subscribing to an artist or node.
+3. **Custom Objects**: Create new objects to represent musical content:
+   - `AudioTrack`: Includes metadata like artist, album, duration, etc.
+   - `Playlist`: User-curated lists of audio tracks.
+
+#### ActivityPub API Extensions
+Extend the API endpoints to handle new activities and objects, ensuring compliance with the protocol.
+
+### Integrating Hyperledger for Transactions
+#### Hyperledger Fabric Setup
+1. **Deploy Hyperledger Nodes**: Each ActivityPub server also runs a Hyperledger Fabric node.
+2. **Chaincode Development**:
+   - **Subscription Payments**: Logic for subscription payments, ensuring $1 goes to node operators and $9 is pooled for artists.
+   - **Streaming Rewards**: Distribute funds to artists based on verified streaming data.
+   - **Transaction Verification**: Ensure all transactions are verified and recorded on the ledger.
+
+#### Data Flow & Architecture
+***The Trustless USDP Bridge*** To ensure node operators are not liable for artist payouts (avoiding "money transmitter" status), 9ten utilizes a Split-Payment Smart Contract on a public blockchain (e.g., Polygon or Ethereum) alongside the Hyperledger private ledger.
+Subscription Event:
+
+    Listener sends $10 USDP to the 9ten Smart Contract.
+
+    The Smart Contract automatically splits the transaction:
+
+        $1.00 USDP is sent immediately to the Node Operator's Public Wallet (Operational Fee).
+
+        $9.00 USDP is locked in the Artist Payout Vault (Smart Contract).
+
+Credit Issuance:
+
+    The Smart Contract emits a SubscriptionVerified event.
+
+    The local 9ten Node (listening via Oracle) detects this event and grants the user 30 days of "Premium" access on the Hyperledger Fabric network.
+
+Streaming & Logging:
+
+    User listens to music. The client signs ListenActivity packets.
+
+    Hyperledger Fabric records these verified streams immutably.
+
+Distribution (The "Top 9" Protocol):
+
+    On the 25th of the month, the Node calculates the user's "Top 9" artists.
+
+    The Node submits a PayoutManifest to the public Smart Contract.
+
+    The Smart Contract unlocks the user's $9.00 from the Vault and sends Equal Payments directly to the wallet addresses of those 9 artists.
+- **Payment Handling**: Payments are processed through listeners' digital wallets, interfaced with Hyperledger Fabric.
+- **Streaming Data**: Nodes collect streaming data and report it to the ledger for data integrity and transparency.
 
 ## Effective Dispute Resolution Mechanism
 
