@@ -56,7 +56,8 @@ flowchart TD
         Client[9ten Client App]
     end
 
-    subgraph Public_Chain [Public Blockchain (Polygon/Eth)]
+    %% FIXED: Removed parentheses in title to fix parse error
+    subgraph Public_Chain [Public Blockchain - Polygon or Eth]
         SC[Split-Payment Smart Contract]:::blockchain
         Vault[Artist Payout Vault]:::blockchain
     end
@@ -64,7 +65,8 @@ flowchart TD
     subgraph 9ten_Network [9ten Decentralized Network]
         Node[Local 9ten Node / Oracle]:::p2p
         Witness[Witness Node]:::p2p
-        HL[(Hyperledger Fabric Ledger)]:::storage
+        %% FIXED: Added quotes inside the cylinder definition
+        HL[("Hyperledger Fabric Ledger")]:::storage
     end
 
     %% --- FLOW 1: SUBSCRIPTION ---
@@ -85,7 +87,7 @@ flowchart TD
     Node -->|12. Commit Verified Stream| HL
 
     %% --- FLOW 3: MONTHLY PAYOUT ---
-    HL -->|13. Calculate Top 9 (Equal Split)| Node
+    HL -->|13. Calculate Top 9 Equal Split| Node
     Node -->|14. Submit PayoutManifest| SC
     SC -->|15. Unlock Funds| Vault
     Vault -->|16. Direct Transfer| Artist
